@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário, Minha Princesa!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #8A2BE2 0%, #9370DB 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        h1 {
+            color: #6A0DAD;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .countdown-container {
+            margin: 30px 0;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .countdown-box {
+            background: linear-gradient(to bottom, #9370DB 0%, #8A2BE2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 80px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        
+        .gift-container {
+            display: none;
+            margin: 40px 0;
+            animation: fadeIn 1s ease;
+        }
+        
+        .gift-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            cursor: pointer;
+            position: relative;
+            animation: pulse 2s infinite;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+        }
+        
+        .gift-image:hover {
+            animation: pulse 0.8s infinite, shake 0.5s ease;
+        }
+        
+        .message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #6A0DAD;
+            font-weight: bold;
+        }
+        
+        .surprise {
+            display: none;
+            animation: fadeIn 2s ease;
+            margin-top: 30px;
+        }
+        
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+        }
+        
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+        }
+        
+        .carousel-item img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            color: #6A0DAD;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .prev {
+            left: 10px;
+        }
+        
+        .next {
+            right: 10px;
+        }
+        
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #ccc;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #6A0DAD;
+        }
+        
+        .declaration {
+            background: linear-gradient(135deg, #9370DB 0%, #8A2BE2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: white;
+            line-height: 1.8;
+            text-align: left;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .declaration p {
+            margin-bottom: 15px;
+        }
+        
+        .declaration p:last-child {
+            margin-bottom: 0;
+            text-align: right;
+            font-style: italic;
+            margin-top: 20px;
+        }
+        
+        .heart {
+            color: #FF6BCB;
+            font-size: 2rem;
+            margin: 20px 0;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @media (max-width: 600px) {
+            .countdown {
+                flex-wrap: wrap;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .gift-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .carousel-item img {
+                max-height: 350px;
+            }
+            
+            .carousel-container {
+                max-width: 320px;
+            }
+            
+            .declaration {
+                padding: 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Está Chegando a HORAAAAAAA!!!!</h1>
+        
+        <div class="countdown-container">
+            <p>Faltam apenas:</p>
+            <div class="countdown">
+                <div class="countdown-box">
+                    <div class="countdown-value" id="days">00</div>
+                    <div class="countdown-label">Dias</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-value" id="hours">00</div>
+                    <div class="countdown-label">Horas</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-value" id="minutes">00</div>
+                    <div class="countdown-label">Minutos</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-value" id="seconds">00</div>
+                    <div class="countdown-label">Segundos</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gift-container" id="giftContainer">
+            <svg class="gift-image" id="giftBox" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                <path d="M464 144h-40.9c13.2-21.6 21.1-46.3 21.1-72C444 32.3 411.7 0 372 0c-25.7 0-50.4 7.9-72 21.1C278.4 7.9 253.7 0 228 0 188.3 0 156 32.3 156 72c0 25.7 7.9 50.4 21.1 72H112c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h16v112c0 26.5 21.5 48 48 48h256c26.5 0 48-21.5 48-48V336h16c26.5 0 48-21.5 48-48v-96c0-26.5-21.5-48-48-48zM228 48c13.2 0 24 10.8 24 24s-10.8 24-24 24-24-10.8-24-24 10.8-24 24-24zm56 176v224H128V224h156zm92-128c13.2 0 24 10.8 24 24s-10.8 24-24 24-24-10.8-24-24 10.8-24 24-24zm76 128H336v224h112V224zm-304 0v224h112V224H148z" fill="#6A0DAD"/>
+                <path d="M464 144h-40.9c13.2-21.6 21.1-46.3 21.1-72C444 32.3 411.7 0 372 0c-25.7 0-50.4 7.9-72 21.1C278.4 7.9 253.7 0 228 0 188.3 0 156 32.3 156 72c0 25.7 7.9 50.4 21.1 72H112c-26.5 0-48 21.5-48 48v96c0 26.5 21.5 48 48 48h16v112c0 26.5 21.5 48 48 48h256c26.5 0 48-21.5 48-48V336h16c26.5 0 48-21.5 48-48v-96c0-26.5-21.5-48-48-48zM228 48c13.2 0 24 10.8 24 24s-10.8 24-24 24-24-10.8-24-24 10.8-24 24-24zm56 176v224H128V224h156zm92-128c13.2 0 24 10.8 24 24s-10.8 24-24 24-24-10.8-24-24 10.8-24 24-24zm76 128H336v224h112V224zm-304 0v224h112V224H148z" fill="#FF6BCB" opacity="0.3"/>
+            </svg>
+            <p class="message">Clique na caixa de presente!</p>
+        </div>
+        
+        <div class="surprise" id="surprise">
+            <h2>Feliz Aniversário, Minha Princesa!</h2>
+            <div class="heart">❤️</div>
+            
+            <div class="carousel-container">
+                <div class="carousel" id="carousel">
+                    <div class="carousel-item">
+                        <img src="1.jpeg" alt="Nossa foto 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="2.jpeg" alt="Nossa foto 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="3.jpeg" alt="Nossa foto 3">
+                    </div>
+                </div>
+                <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
+                <button class="carousel-btn next" id="nextBtn">&#10095;</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+            
+            <div class="declaration">
+                <p>❤️Minha princesa❤️,</p>
+                
+                <p>Hoje celebramos muito mais que seu aniversário - celebramos a pessoa maravilhosa que você é, a luz que ilumina nossa família e o amor que dá sentido à minha existência.</p>
+                
+                <p>Desde o momento em que nossos caminhos se cruzaram, minha vida ganhou cores que eu nem sabia existiam. Você transformou meus dias com seu sorriso, meu mundo com seu amor e meu coração com sua doçura.</p>
+                
+                <p>Ver você como mãe dos nossos três tesouros é uma das minhas maiores bênçãos. A maneira como você cuida, educa e ama nossos filhos me enche de orgulho e admiração. Eles têm a sorte de ter você como exemplo de força, bondade e amor incondicional.</p>
+                
+                <p>Você é a base da nossa família, o elo que nos mantém unidos e o calor que aconchega nosso lar. Cada riso, cada abraço, cada momento ao seu lado é um presente que guardo com todo o meu ser.</p>
+                
+                <p>Neste dia especial, quero que você sinta todo o amor e gratidão que transbordam do meu coração. Que possamos comemorar muitos e muitos anos juntos, lado a lado, construindo memórias e vivendo um amor que só cresce a cada dia.</p>
+                
+                <p>Você é minha melhor metade, minha paixão, minha companheira de todas as horas e a realização de todos os meus sonhos.</p>
+                
+                <p>Feliz aniversário, amor da minha vida! Que este novo ano traza ainda mais alegrias, conquistas e momentos especiais para você, porque você merece tudo de melhor que a vida pode oferecer.</p>
+                
+                <p>Eu te amo hoje, amanhã e para sempre❤️.</p>
+                
+                <p>Com todo meu amor❤️,<br>João</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data alvo: 09 de setembro de 2025 às 00:00
+        const targetDate = new Date('September 09, 2025 00:00:00').getTime();
+        
+        // Atualiza a contagem regressiva a cada segundo
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const timeRemaining = targetDate - now;
+            
+            // Se o tempo acabou
+            if (timeRemaining <= 0) {
+                clearInterval(countdown);
+                document.getElementById('days').innerText = '00';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+                
+                // Mostra a caixa de presente
+                document.getElementById('giftContainer').style.display = 'block';
+            } else {
+                // Calcula dias, horas, minutos e segundos
+                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+                
+                // Exibe o resultado
+                document.getElementById('days').innerText = days.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+            }
+        }, 1000);
+        
+        // Adiciona evento de clique na caixa de presente
+        document.getElementById('giftBox').addEventListener('click', function() {
+            document.getElementById('giftContainer').style.display = 'none';
+            document.getElementById('surprise').style.display = 'block';
+            
+            // Rola suavemente para a surpresa
+            document.getElementById('surprise').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Código para o carrossel de fotos
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const carousel = document.getElementById('carousel');
+        const dotsContainer = document.getElementById('carouselDots');
+        
+        // Criar dots (indicadores) para o carrossel
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(i);
+            });
+            dotsContainer.appendChild(dot);
+        });
+        
+        // Botões de navegação
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            goToSlide(currentSlide - 1);
+        });
+        
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            goToSlide(currentSlide + 1);
+        });
+        
+        // Função para ir para um slide específico
+        function goToSlide(n) {
+            // Verifica os limites
+            if (n < 0) {
+                n = slides.length - 1;
+            } else if (n >= slides.length) {
+                n = 0;
+            }
+            
+            // Atualiza o carrossel
+            carousel.style.transform = `translateX(-${n * 100}%)`;
+            
+            // Atualiza o dot ativo
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === n);
+            });
+            
+            currentSlide = n;
+        }
+    </script>
+</body>
+</html>
